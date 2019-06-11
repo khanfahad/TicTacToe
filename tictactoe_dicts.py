@@ -1,25 +1,23 @@
-# check winner of board
 def checkWinner(board):
-    if board[1] == board[2] == board[3] != ' ': # matches top row
+    if board[1] == board[2] == board[3] != ' ':
         return 1
-    elif board[1] == board[5] == board[9] != ' ': # matches diagnally from top left
+    elif board[1] == board[5] == board[9] != ' ':
         return 1
-    elif board[1] == board[4] == board[7] != ' ': # matches left column
+    elif board[1] == board[4] == board[7] != ' ':
         return 1
-    elif board[4] == board[5] == board[6] != ' ': # matches middle row
+    elif board[4] == board[5] == board[6] != ' ':
         return 1
-    elif board[7] == board[5] == board[3] != ' ': # matches diagnoally from bottom left
+    elif board[7] == board[5] == board[3] != ' ':
         return 1
-    elif board[7] == board[8] == board[9] != ' ': # matches bottom row
+    elif board[7] == board[8] == board[9] != ' ':
         return 1
-    elif board[2] == board[5] == board[8] != ' ': # matches middle column
+    elif board[2] == board[5] == board[8] != ' ':
         return 1
-    elif board[3] == board[6] == board[9] != ' ': # matches right column
+    elif board[3] == board[6] == board[9] != ' ':
         return 1
     else:
         return 0
-
-# prints board
+    
 def printBoard(board):
     print(board[1] + '|' + board[2] + "|" + board[3] + '    1|2|3')
     print('-+-+-    -+-+-')
@@ -27,24 +25,29 @@ def printBoard(board):
     print('-+-+-    -+-+-')
     print(board[7] + '|' + board[8] + "|" + board[9] + '    7|8|9')
 
-# generates a dictionary for board
 board = {1: ' ', 2: ' ', 3: ' ',
          4: ' ', 5: ' ', 6: ' ',
          7: ' ', 8: ' ', 9: ' '}
 
-turn = 'X' # sets initial turn
+while True:
+    turn = input("Do you want to be 'X' or 'O'?")
+    turn = turn.upper()
+    if turn == 'X' or turn == 'O':
+        break
+        
 printBoard(board)
 result = checkWinner(board)
 turnCount = 0
-
-# runs until someone wins or all slots are filled
 while result == 0 and turnCount < 9:
-    move = input('Turn for ' + turn + '. Pick a space for the move: ')
+    while True:
+        move = input('Turn for ' + turn + '. Pick a valid space for the move: ')
+        if board[int(move)] == ' ':
+            break
     turnCount += 1
     board[int(move)] = turn
     result = checkWinner(board)
     printBoard(board)    
-    if result == 1: # if there's a winner
+    if result == 1:
         print(turn + " wins!")
         continue
     else:
